@@ -1,11 +1,14 @@
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 public class SecondFrame extends JFrame implements ActionListener{
 	JPanel p1,p2,p3,p4;
 	JButton b1,b2,b3,b4,b5,b6,b7,b8;
-	JLabel heading1;
+	JLabel heading1,imageLabel;
 	JComboBox jl;
 	String[] language= {"hindi","english","spanish"};
 	JTextArea jt1,jt2;
@@ -16,6 +19,7 @@ public class SecondFrame extends JFrame implements ActionListener{
 		this.setExtendedState(this.getExtendedState()|this.MAXIMIZED_BOTH);
 		setLayout(null);
 		heading1=new JLabel("IMAGE",JLabel.LEFT);
+		imageLabel = new JLabel();
 		
 		p1=new JPanel();
 		p1.setLayout(null);
@@ -57,10 +61,10 @@ public class SecondFrame extends JFrame implements ActionListener{
 		b5.addActionListener(this);		
 		
 		p3=new JPanel();
-		p3.setLayout(null);
 		p3.setBackground(Color.getHSBColor(9.06f, 2.3f, 42.9f));
 		p3.setBounds(5,195,655,542);
 		p3.add(heading1);
+		p3.add(imageLabel);
 		add(p3);
 		
 		p4=new JPanel();
@@ -103,9 +107,40 @@ public class SecondFrame extends JFrame implements ActionListener{
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent arg) {
 		// TODO Auto-generated method stub
+		if(arg.getActionCommand()=="Browse")
+		{
+			System.out.println("Hello");
+			JFileChooser file = new JFileChooser();
+	        FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images","jpeg", "jpg","gif","png");
+	        file.addChoosableFileFilter(filter);
+	        int result = file.showOpenDialog(null);
+	        if(result == JFileChooser.APPROVE_OPTION)
+	        {
+	        	System.out.println("Hellllo");
+		        File selectedFile = file.getSelectedFile();
+		        String path = selectedFile.getAbsolutePath();
+		        imageLabel.setIcon(ResizeImage(path));
+		        
+	        }
+	        else if(result == JFileChooser.CANCEL_OPTION)
+	        {
+	        	System.out.println("No File Select");
+	        }
+		}
 		
 	}
+	
+	public ImageIcon ResizeImage(String ImagePath)
+    {
+		System.out.println("Hellllllghlo");
+        ImageIcon MyImage = new ImageIcon(ImagePath);
+        Image img = MyImage.getImage();
+        Image newImg = img.getScaledInstance(p3.getWidth(), p3.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon image = new ImageIcon(newImg);
+        return image;
+    }
+	
 }
 	
