@@ -19,6 +19,7 @@ public class CameraClass extends Thread{
 	static VideoCapture capture;
 	Mat webcamImage;
 	static volatile boolean runnable = false;
+	
 	public CameraClass()
 	{
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);	//loading opencv library

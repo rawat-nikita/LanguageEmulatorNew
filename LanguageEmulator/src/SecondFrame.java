@@ -10,7 +10,6 @@ public class SecondFrame extends JFrame implements ActionListener{
 	JPanel p1,p2,p3,p4;
 	JButton b1,b2,b3,b4,b5,b6,b7,b8,b9;
 	static JLabel imageLabel;	//static, so that it can directly be accessed from CameraClass
-	
 	JLabel l1,l2,l3,l4,l5;
 	JComboBox combo1,combo2;
 	String[] language= {"hindi","english","spanish"};
