@@ -16,6 +16,7 @@ public class SecondFrame extends JFrame implements ActionListener{
 	JTextArea jt1,jt2;
 	Thread t;
 	CameraClass c;
+	
 	public SecondFrame()
 	{   
 		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();

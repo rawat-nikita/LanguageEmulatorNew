@@ -38,7 +38,6 @@ public class CameraClass extends Thread{
 		System.arraycopy(source, 0, target, 00, source.length);
 		
 	}
-
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
