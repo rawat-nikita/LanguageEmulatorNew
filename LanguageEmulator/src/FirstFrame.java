@@ -15,6 +15,9 @@ JLabel l1,l2,l3;
 
     public FirstFrame()
     {
+    	GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		this.setMaximizedBounds(env.getMaximumWindowBounds());
+		this.setExtendedState(this.getExtendedState()|this.MAXIMIZED_BOTH);
     	setLayout(null);
 		
     setTitle("Tourist Language Emulator");
