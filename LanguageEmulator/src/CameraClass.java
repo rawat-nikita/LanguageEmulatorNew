@@ -15,7 +15,7 @@ import org.opencv.videoio.VideoCapture;
 
 
 public class CameraClass extends Thread{
-	BufferedImage image;
+	static BufferedImage image;
 	static VideoCapture capture;
 	Mat webcamImage;
 	static volatile boolean runnable = false;
@@ -23,7 +23,7 @@ public class CameraClass extends Thread{
 	public CameraClass()
 	{
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);	//loading opencv library
-		
+		image = null;
 	}
 	
 	public void matToBufferedImage(Mat matBGR)
@@ -45,7 +45,7 @@ public class CameraClass extends Thread{
 		{
 			SecondFrame.imageLabel.setIcon(null);
 			capture = new VideoCapture(0);	//accessing the default camera
-			Mat webcamImage = new Mat();	//matrix to store image frames from camera
+			webcamImage = new Mat();	//matrix to store image frames from camera
 			
 			if(capture.isOpened()) 	//if camera is opened
 			{

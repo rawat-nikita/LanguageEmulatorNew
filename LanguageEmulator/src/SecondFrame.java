@@ -1,10 +1,13 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 public class SecondFrame extends JFrame implements ActionListener{
 	JPanel p1,p2,p3,p4;
@@ -16,6 +19,8 @@ public class SecondFrame extends JFrame implements ActionListener{
 	JTextArea jt1,jt2;
 	Thread t;
 	CameraClass c;
+	File f;
+	String tempImagePath = "E:\\Language Emulator\\Temp\\Temporary.jpg";
 	
 	public SecondFrame()
 	{   
@@ -100,7 +105,7 @@ public class SecondFrame extends JFrame implements ActionListener{
 		b9.addActionListener(this);
 		p3.add(b9);
 		imageLabel = new JLabel();
-		imageLabel.setBounds(10,40,635,590);
+		imageLabel.setBounds(10,45,635,540);
 		p3.add(imageLabel);
 		
 		
@@ -177,20 +182,43 @@ public class SecondFrame extends JFrame implements ActionListener{
 	        }
 	        else if(result == JFileChooser.CANCEL_OPTION)	//"cancel" option selected
 	        {
-	        	System.out.println("No File Select");
+	        	System.out.println("No File Selected");
 	        }
 		}
 		
 		if(arg.getActionCommand()=="Open Camera")
 		{
-			CameraClass.runnable = true;
+			
 			t = new Thread(new CameraClass());	//thread for accessing webcam
-			t.start();
-			b9.setEnabled(true);			
+			CameraClass.runnable = true;
+			if(CameraClass.image==null)
+				t.start();
+			b9.setEnabled(true);
+			b1.setEnabled(false);
 		}
 		if(arg.getActionCommand()=="Capture")
 		{
-			
+			f = new File(tempImagePath);
+			if(f.exists())
+			{
+				f.delete();
+				f = new File(tempImagePath);
+			}
+			try {
+				ImageIO.write(CameraClass.image, "jpg", f);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			imageLabel.setIcon(ResizeImage(CameraClass.image));
+			if(CameraClass.runnable==true)
+	        {
+	        	CameraClass.runnable = false;
+	        	CameraClass.capture.release();
+	        		        	
+	        }
+			b1.setEnabled(true);
+			b9.setEnabled(false);
 		}
 		
 	}
@@ -200,6 +228,15 @@ public class SecondFrame extends JFrame implements ActionListener{
 		ImageIcon MyImage = new ImageIcon(ImagePath);
         Image img = MyImage.getImage();
         //Image newImg = img.getScaledInstance(400, 400, Image.SCALE_SMOOTH);
+        Image newImg = img.getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon image = new ImageIcon(newImg);
+        return image;
+    }
+	
+	public ImageIcon ResizeImage(BufferedImage bimg)
+    {
+        ImageIcon MyImage = new ImageIcon(bimg);
+        Image img = MyImage.getImage();
         Image newImg = img.getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon image = new ImageIcon(newImg);
         return image;
