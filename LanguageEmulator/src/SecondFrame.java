@@ -25,6 +25,11 @@ public class SecondFrame extends JFrame implements ActionListener{
 		setLayout(null);
 		c = new CameraClass();
 		
+		//making a directory
+		new File("E:\\Language Emulator").mkdir();
+		new File("E:\\Language Emulator\\Temp").mkdir();
+		new File("E:\\Language Emulator\\Saved").mkdir();
+		
 		//first panel
 		p1=new JPanel();
 		p1.setLayout(null);
