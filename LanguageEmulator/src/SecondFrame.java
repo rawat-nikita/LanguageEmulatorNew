@@ -237,7 +237,6 @@ public class SecondFrame extends JFrame implements ActionListener{
 			}
 			buff = new ImagePreprocess().getPreprocessedImage();
 			String text1 = new OCRClass(buff).getOCRText();	//for performing OCR
-			System.out.println(text1);
 			jt1.setText(text1);
 		}
 		
